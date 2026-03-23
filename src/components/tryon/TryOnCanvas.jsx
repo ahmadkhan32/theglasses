@@ -3,7 +3,7 @@ import React, { useRef, useEffect, useState, useCallback } from 'react';
 const CANVAS_W = 520;
 const CANVAS_H = 580;
 
-const TryOnCanvas = ({ userImage, glassesImage, size, rotation, canvasRef }) => {
+const TryOnCanvas = ({ userImage, glassesImage, size, rotation, opacity = 1, canvasRef }) => {
     const [dragging, setDragging] = useState(false);
     const [pos, setPos] = useState({ x: CANVAS_W / 2 - 100, y: CANVAS_H / 2 - 60 });
     const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
@@ -58,9 +58,11 @@ const TryOnCanvas = ({ userImage, glassesImage, size, rotation, canvasRef }) => 
             const rad = (parseInt(rotation) * Math.PI) / 180;
 
             ctx.save();
+            ctx.globalAlpha = opacity ?? 1;
             ctx.translate(pos.x + w / 2, pos.y + h / 2);
             ctx.rotate(rad);
             ctx.drawImage(glassesImgRef.current, -w / 2, -h / 2, w, h);
+            ctx.globalAlpha = 1;
             ctx.restore();
 
             // Draw drag handle border when not dragging
@@ -75,7 +77,7 @@ const TryOnCanvas = ({ userImage, glassesImage, size, rotation, canvasRef }) => 
                 ctx.restore();
             }
         }
-    }, [pos, size, rotation, dragging, canvasRef]);
+    }, [pos, size, rotation, opacity, dragging, canvasRef]);
 
     // Re-draw on any change
     useEffect(() => {

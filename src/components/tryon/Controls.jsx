@@ -1,5 +1,5 @@
 import React from 'react';
-import { Maximize2, RotateCw } from 'lucide-react';
+import { Maximize2, RotateCw, Eye } from 'lucide-react';
 
 const sliderStyle = {
     width: '100%',
@@ -10,7 +10,7 @@ const sliderStyle = {
     accentColor: 'var(--accent-blue)',
 };
 
-const Controls = ({ size, setSize, rotation, setRotation, onReset }) => {
+const Controls = ({ size, setSize, rotation, setRotation, opacity, setOpacity, onReset }) => {
     return (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
             {/* Size */}
@@ -63,6 +63,31 @@ const Controls = ({ size, setSize, rotation, setRotation, onReset }) => {
                 </div>
             </div>
 
+            {/* Opacity */}
+            <div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <Eye size={16} color="var(--accent-blue)" />
+                        <span style={{ fontWeight: 600, fontSize: '14px' }}>Opacity</span>
+                    </div>
+                    <span style={{ fontSize: '13px', color: 'var(--text-secondary)', fontWeight: 700 }}>
+                        {Math.round((opacity ?? 1) * 100)}%
+                    </span>
+                </div>
+                <input
+                    type="range"
+                    min="10"
+                    max="100"
+                    value={Math.round((opacity ?? 1) * 100)}
+                    onChange={(e) => setOpacity(Number(e.target.value) / 100)}
+                    style={sliderStyle}
+                />
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '11px', color: 'var(--text-light)', marginTop: '4px' }}>
+                    <span>Transparent</span>
+                    <span>Solid</span>
+                </div>
+            </div>
+
             {/* Reset */}
             <button
                 onClick={onReset}
@@ -79,7 +104,7 @@ const Controls = ({ size, setSize, rotation, setRotation, onReset }) => {
                     alignSelf: 'flex-start',
                 }}
             >
-                ↺ Reset Position
+                ↺ Reset All
             </button>
         </div>
     );
