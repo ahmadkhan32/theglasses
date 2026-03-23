@@ -1,7 +1,8 @@
 import React, { useState, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Download, ShoppingBag, Info, Save, Trash2, Clock, CheckCircle, XCircle, LogIn } from 'lucide-react';
+import { Download, ShoppingBag, Info, Save, Trash2, Clock, CheckCircle, XCircle, LogIn, Camera as CameraIcon, Image as ImageIcon } from 'lucide-react';
 import TryOnCanvas from '../components/tryon/TryOnCanvas';
+import TryOnAI from '../components/tryon/TryOnAI';
 import ImageUpload from '../components/tryon/ImageUpload';
 import Controls from '../components/tryon/Controls';
 import GlassesSelector, { GLASSES } from '../components/tryon/GlassesSelector';
@@ -103,12 +104,14 @@ const SessionCard = ({ session, onDelete }) => (
 
 // ─── Main TryOn Page ─────────────────────────────────────────────────────────
 const TryOn = () => {
+    const [mode, setMode] = useState('manual'); // 'manual' or 'ai'
     const [userImage, setUserImage] = useState(null);
     const [selectedGlasses, setSelectedGlasses] = useState(GLASSES[0]);
     const [size, setSize] = useState(DEFAULT_SIZE);
     const [rotation, setRotation] = useState(DEFAULT_ROTATION);
     const [opacity, setOpacity] = useState(DEFAULT_OPACITY);
     const [downloadDone, setDownloadDone] = useState(false);
+    const [cartMsg, setCartMsg] = useState(null);
     const canvasRef = useRef(null);
 
     const {
@@ -145,8 +148,17 @@ const TryOn = () => {
         } catch (_) { /* errors handled by hook */ }
     };
 
-    const toastMsg = successMsg || error;
-    const toastType = successMsg ? 'success' : 'error';
+    const handleAddToCart = () => {
+        // Dummy add to cart implementation
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+        cart.push({ id: selectedGlasses.id, name: selectedGlasses.label, price: 3000, qty: 1, image: selectedGlasses.src });
+        localStorage.setItem("cart", JSON.stringify(cart));
+        setCartMsg(`${selectedGlasses.label} added to cart!`);
+        setTimeout(() => setCartMsg(null), 3000);
+    };
+
+    const toastMsg = successMsg || error || cartMsg;
+    const toastType = (successMsg || cartMsg) ? 'success' : 'error';
 
     return (
         <main style={{ minHeight: '100vh', backgroundColor: 'var(--bg-secondary)', padding: '48px 0 80px' }}>
@@ -184,6 +196,24 @@ const TryOn = () => {
                     </p>
                 </motion.div>
 
+                {/* Mode Selector */}
+                <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '32px' }}>
+                    <div style={{ display: 'inline-flex', backgroundColor: '#fff', borderRadius: '100px', p: '4px', border: '1px solid var(--border-color)', overflow: 'hidden' }}>
+                        <button 
+                            onClick={() => setMode('manual')}
+                            style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '12px 24px', backgroundColor: mode === 'manual' ? 'var(--accent-blue)' : 'transparent', color: mode === 'manual' ? '#fff' : 'var(--text-secondary)', fontWeight: 600, border: 'none', cursor: 'pointer', transition: 'all 0.2s', borderRadius: '100px' }}
+                        >
+                            <ImageIcon size={18} /> Upload Photo
+                        </button>
+                        <button 
+                            onClick={() => setMode('ai')}
+                            style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '12px 24px', backgroundColor: mode === 'ai' ? 'var(--accent-blue)' : 'transparent', color: mode === 'ai' ? '#fff' : 'var(--text-secondary)', fontWeight: 600, border: 'none', cursor: 'pointer', transition: 'all 0.2s', borderRadius: '100px' }}
+                        >
+                            <CameraIcon size={18} /> Live AI Mirror
+                        </button>
+                    </div>
+                </div>
+
                 {/* Main layout */}
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '32px', alignItems: 'start', maxWidth: '1100px', margin: '0 auto' }}>
 
@@ -194,15 +224,17 @@ const TryOn = () => {
                         transition={{ delay: 0.2 }}
                         style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}
                     >
-                        {/* Upload */}
-                        <div style={{ backgroundColor: '#fff', borderRadius: '20px', padding: '24px', boxShadow: 'var(--shadow-sm)', border: '1px solid var(--border-color)' }}>
-                            <h3 style={{ fontSize: '17px', fontWeight: 700, marginBottom: '16px' }}>1. Upload Your Photo</h3>
-                            <ImageUpload onImageSelect={setUserImage} image={userImage} />
-                        </div>
+                        {/* Upload (Only in Manual Mode) */}
+                        {mode === 'manual' && (
+                            <div style={{ backgroundColor: '#fff', borderRadius: '20px', padding: '24px', boxShadow: 'var(--shadow-sm)', border: '1px solid var(--border-color)' }}>
+                                <h3 style={{ fontSize: '17px', fontWeight: 700, marginBottom: '16px' }}>1. Upload Your Photo</h3>
+                                <ImageUpload onImageSelect={setUserImage} image={userImage} />
+                            </div>
+                        )}
 
                         {/* Glasses selector */}
                         <div style={{ backgroundColor: '#fff', borderRadius: '20px', padding: '24px', boxShadow: 'var(--shadow-sm)', border: '1px solid var(--border-color)' }}>
-                            <h3 style={{ fontSize: '17px', fontWeight: 700, marginBottom: '16px' }}>2. Select Frame Style</h3>
+                            <h3 style={{ fontSize: '17px', fontWeight: 700, marginBottom: '16px' }}>{mode === 'manual' ? '2. Select Frame Style' : '1. Select Frame Style'}</h3>
                             <GlassesSelector selected={selectedGlasses.id} onSelect={setSelectedGlasses} />
                         </div>
 
@@ -271,26 +303,33 @@ const TryOn = () => {
                         transition={{ delay: 0.2 }}
                         style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}
                     >
-                        {/* Canvas */}
-                        <div style={{ backgroundColor: '#fff', borderRadius: '20px', padding: '24px', boxShadow: 'var(--shadow-sm)', border: '1px solid var(--border-color)', position: 'sticky', top: '96px' }}>
-                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-                                <h3 style={{ fontSize: '17px', fontWeight: 700 }}>Live Preview</h3>
-                                <span style={{ backgroundColor: 'var(--bg-secondary)', padding: '4px 12px', borderRadius: '100px', fontSize: '12px', fontWeight: 600, color: 'var(--text-secondary)' }}>
-                                    {selectedGlasses?.label}
-                                </span>
+                        {/* Interactive Area */}
+                        {mode === 'manual' ? (
+                            <div style={{ backgroundColor: '#fff', borderRadius: '20px', padding: '24px', boxShadow: 'var(--shadow-sm)', border: '1px solid var(--border-color)', position: 'sticky', top: '96px' }}>
+                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+                                    <h3 style={{ fontSize: '17px', fontWeight: 700 }}>Live Preview</h3>
+                                    <span style={{ backgroundColor: 'var(--bg-secondary)', padding: '4px 12px', borderRadius: '100px', fontSize: '12px', fontWeight: 600, color: 'var(--text-secondary)' }}>
+                                        {selectedGlasses?.label}
+                                    </span>
+                                </div>
+                                <TryOnCanvas
+                                    userImage={userImage}
+                                    glassesImage={selectedGlasses.src}
+                                    size={size}
+                                    rotation={rotation}
+                                    opacity={opacity}
+                                    canvasRef={canvasRef}
+                                />
+                                <p style={{ textAlign: 'center', fontSize: '12px', color: 'var(--text-light)', marginTop: '12px' }}>
+                                    Drag the glasses to reposition • Use sliders to adjust fit
+                                </p>
                             </div>
-                            <TryOnCanvas
-                                userImage={userImage}
-                                glassesImage={selectedGlasses.src}
-                                size={size}
-                                rotation={rotation}
-                                opacity={opacity}
-                                canvasRef={canvasRef}
+                        ) : (
+                            <TryOnAI 
+                                selectedGlassesImage={selectedGlasses.src} 
+                                onCartAdd={handleAddToCart}
                             />
-                            <p style={{ textAlign: 'center', fontSize: '12px', color: 'var(--text-light)', marginTop: '12px' }}>
-                                Drag the glasses to reposition • Use sliders to adjust fit
-                            </p>
-                        </div>
+                        )}
 
                         {/* Session History (visible only when logged in) */}
                         {userId && (
