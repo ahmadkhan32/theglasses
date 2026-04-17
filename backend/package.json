@@ -4,6 +4,7 @@
   "description": "Express API for The Glasses clothing store using Supabase",
   "main": "server.js",
   "scripts": {
+    "build": "node -e \"console.log('Backend ready for Vercel')\"",
     "start": "node server.js",
     "dev": "node server.js"
   },
