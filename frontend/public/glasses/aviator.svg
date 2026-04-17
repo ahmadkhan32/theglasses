@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 190" width="520" height="190">
+  <!-- Left lens – classic aviator teardrop -->
+  <path d="M 55,68 C 52,32 80,10 132,10 C 184,10 214,34 222,64 C 230,94 220,134 192,152 C 166,168 118,168 90,150 C 62,132 58,102 55,68 Z"
+        fill="rgba(80,130,210,0.28)" stroke="#c8a830" stroke-width="5.5" stroke-linejoin="round"/>
+  <!-- Right lens – mirror -->
+  <path d="M 465,68 C 468,32 440,10 388,10 C 336,10 306,34 298,64 C 290,94 300,134 328,152 C 354,168 402,168 430,150 C 458,132 462,102 465,68 Z"
+        fill="rgba(80,130,210,0.28)" stroke="#c8a830" stroke-width="5.5" stroke-linejoin="round"/>
+  <!-- Brow bar left -->
+  <path d="M 57,60 L 222,54" stroke="#c8a830" stroke-width="4" stroke-linecap="round"/>
+  <!-- Brow bar right -->
+  <path d="M 298,54 L 463,60" stroke="#c8a830" stroke-width="4" stroke-linecap="round"/>
+  <!-- Bridge -->
+  <path d="M 222,52 C 238,40 252,38 260,38 C 268,38 282,40 298,52"
+        fill="none" stroke="#c8a830" stroke-width="4.5" stroke-linecap="round"/>
+  <!-- Left nose pad stem -->
+  <path d="M 246,39 C 242,56 239,67 237,82" stroke="#c8a830" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <!-- Right nose pad stem -->
+  <path d="M 274,39 C 278,56 281,67 283,82" stroke="#c8a830" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <!-- Nose pad tips -->
+  <ellipse cx="236" cy="83" rx="5" ry="4" fill="none" stroke="#c8a830" stroke-width="2"/>
+  <ellipse cx="284" cy="83" rx="5" ry="4" fill="none" stroke="#c8a830" stroke-width="2"/>
+  <!-- Hinge left -->
+  <circle cx="58" cy="61" r="5" fill="#c8a830"/>
+  <!-- Hinge right -->
+  <circle cx="462" cy="61" r="5" fill="#c8a830"/>
+  <!-- Lens highlights -->
+  <path d="M 92,30 C 104,20 122,14 140,15" fill="none" stroke="rgba(255,255,255,0.55)" stroke-width="3" stroke-linecap="round"/>
+  <path d="M 428,30 C 416,20 398,14 380,15" fill="none" stroke="rgba(255,255,255,0.55)" stroke-width="3" stroke-linecap="round"/>
+</svg>

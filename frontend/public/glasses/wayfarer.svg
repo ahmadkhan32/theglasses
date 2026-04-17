@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 160" width="520" height="160">
+  <!-- Left frame – thick wayfarer with top flare -->
+  <path d="M 18,30 L 225,18 L 228,148 Q 228,152 224,152 L 22,152 Q 18,152 18,148 Z"
+        fill="rgba(12,12,12,0.52)" stroke="#1c1c1c" stroke-width="7" stroke-linejoin="round"/>
+  <!-- Right frame -->
+  <path d="M 502,30 L 295,18 L 292,148 Q 292,152 296,152 L 498,152 Q 502,152 502,148 Z"
+        fill="rgba(12,12,12,0.52)" stroke="#1c1c1c" stroke-width="7" stroke-linejoin="round"/>
+  <!-- Bridge -->
+  <path d="M 228,44 Q 250,34 260,34 Q 270,34 292,44 L 292,68 Q 270,58 260,58 Q 250,58 228,68 Z"
+        fill="#1c1c1c"/>
+  <!-- Top rim highlights -->
+  <path d="M 24,32 L 220,20" stroke="rgba(255,255,255,0.18)" stroke-width="3.5" stroke-linecap="round"/>
+  <path d="M 496,32 L 300,20" stroke="rgba(255,255,255,0.18)" stroke-width="3.5" stroke-linecap="round"/>
+  <!-- Hinge rivets -->
+  <circle cx="21" cy="36" r="5" fill="#333"/>
+  <circle cx="499" cy="36" r="5" fill="#333"/>
+  <!-- Inner lens shine -->
+  <path d="M 42,44 L 180,36" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="4" stroke-linecap="round"/>
+  <path d="M 478,44 L 340,36" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="4" stroke-linecap="round"/>
+</svg>

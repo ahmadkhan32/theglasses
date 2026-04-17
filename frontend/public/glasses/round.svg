@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 168" width="520" height="168">
+  <!-- Left circular lens -->
+  <circle cx="142" cy="84" r="78" fill="rgba(50,185,160,0.24)" stroke="#9a9a9a" stroke-width="5.5"/>
+  <!-- Right circular lens -->
+  <circle cx="378" cy="84" r="78" fill="rgba(50,185,160,0.24)" stroke="#9a9a9a" stroke-width="5.5"/>
+  <!-- Bridge -->
+  <path d="M 220,76 C 238,62 252,60 260,60 C 268,60 282,62 300,76"
+        fill="none" stroke="#9a9a9a" stroke-width="4" stroke-linecap="round"/>
+  <!-- Left nose pad -->
+  <path d="M 247,61 C 243,75 240,85 239,100" stroke="#9a9a9a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <!-- Right nose pad -->
+  <path d="M 273,61 C 277,75 280,85 281,100" stroke="#9a9a9a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <!-- Hinge left -->
+  <rect x="57" y="77" width="11" height="14" rx="3" fill="#9a9a9a"/>
+  <!-- Hinge right -->
+  <rect x="452" y="77" width="11" height="14" rx="3" fill="#9a9a9a"/>
+  <!-- Lens highlights left -->
+  <path d="M 98,38 C 110,26 128,20 146,20" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="3" stroke-linecap="round"/>
+  <!-- Lens highlights right -->
+  <path d="M 422,38 C 410,26 392,20 374,20" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="3" stroke-linecap="round"/>
+</svg>
